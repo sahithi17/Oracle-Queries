@@ -1,0 +1,152 @@
+1.
+SQL>  create table proficiency(
+   2  profid int primary key,
+   3  trainerid int,
+   4  skillid int,
+   5  level varchar(20),
+   6  constraint fk_trainer foreign key(trainerid) references trainers(trainerid),
+   7  constraint fk_skill foreign key(skillid) references skills(skillid))
+
+2.
+SQL> drop table trainers;
+drop table trainers
+           *
+ERROR at line 1:
+ORA-02449: unique/primary keys in table referenced by foreign keys
+
+SQL> drop table proficiency;
+
+Table dropped.
+
+SQL> drop table skills;
+
+Table dropped.
+
+SQL> drop table trainers;
+
+Table dropped.
+
+3.
+SQL> create table trainers(
+  2  trainerid int,
+  3  trainername varchar(20),
+  4  DOB date,
+  5  constraint trainer_pk primary key(trainerid));
+
+Table created.
+
+4.
+SQL> drop table trainers;
+
+Table dropped.
+
+5.
+SQL> create table trainers(
+  2  trainerid int,
+  3  trainername varchar(20),
+  4  trainerAddress varchar(20),
+  5  DOB date);
+
+Table created.
+
+SQL> create table skills(
+  2  skillid int,
+  3  skillName varchar(20));
+
+Table created.
+
+SQL> create table proficiency(
+  2  profid int,
+  3  trainerid int,
+  4  skillid int,
+  5  profLevel varchar(20));
+
+Table created.
+
+SQL> alter table trainers add constraint trainid_pk primary key(trainerid);
+
+Table altered.
+
+
+SQL> alter table skills add constraint skill_chk check(skillname in ('c','c++','java','.net','html','css'));
+
+Table altered.
+
+SQL> alter table proficiency add constraint profid_pk primary key(profid);
+
+Table altered.
+
+SQL> alter table proficiency add constraint trainerid_fk foreign key(trainerid) references trainers(trainerid);
+
+Table altered.
+
+SQL> alter table proficiency add constraint level_chk check(proflevel in ('beginner','intermediate','expert'));
+
+Table altered.
+
+SQL> desc proficiency;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ PROFID                                    NOT NULL NUMBER(38)
+ TRAINERID                                          NUMBER(38)
+ SKILLID                                            NUMBER(38)
+ PROFLEVEL                                          VARCHAR2(20)
+
+SQL> desc trainers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TRAINERID                                 NOT NULL NUMBER(38)
+ TRAINERNAME                                        VARCHAR2(20)
+ TRAINERADDRESS                                     VARCHAR2(20)
+ DOB                                                DATE
+
+6.
+SQL> alter table trainers rename column DOB to DOJ;
+
+Table altered.
+
+SQL> desc trainers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TRAINERID                                 NOT NULL NUMBER(38)
+ TRAINERNAME                                        VARCHAR2(20)
+ TRAINERADDRESS                                     VARCHAR2(20)
+ DOJ                                                DATE
+
+7.
+SQL> alter table skills drop constraint skill_chk;
+
+Table altered.
+
+SQL> desc skills;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SKILLID                                            NUMBER(38)
+ SKILLNAME                                          VARCHAR2(20)
+
+8.
+SQL> alter table trainers modify traineraddress varchar(40);
+
+Table altered.
+
+SQL> desc trainers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TRAINERID                                 NOT NULL NUMBER(38)
+ TRAINERNAME                                        VARCHAR2(20)
+ TRAINERADDRESS                                     VARCHAR2(40)
+ DOJ                                                DATE
+
+9.
+SQL> alter table trainers add phone int;
+
+Table altered.
+
+SQL> desc trainers;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TRAINERID                                 NOT NULL NUMBER(38)
+ TRAINERNAME                                        VARCHAR2(20)
+ TRAINERADDRESS                                     VARCHAR2(40)
+ DOJ                                                DATE
+ PHONE                                              NUMBER(38)
